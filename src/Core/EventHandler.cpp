@@ -9,8 +9,6 @@ EventHandler::EventHandler()
 	{
         ignoredEvents[i] = false;
     }
-
-
 }
 
 EventHandler::~EventHandler()
@@ -29,16 +27,6 @@ void EventHandler::run(std::string inputHost, std::string outputHost)
 	emitterThread.join();
 
 	std::cout << "endrun\n";
-}
-
-int EventHandler::numUnprocessedEventsQueued()
-{
-    return 0;
-}
-
-int EventHandler::numProcessedEventsQueued()
-{
-    return 0;
 }
 
 void EventHandler::acceptor()

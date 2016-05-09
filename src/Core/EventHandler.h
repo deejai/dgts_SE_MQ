@@ -18,10 +18,6 @@ public:
 	bool acceptEvents = true; // input
 	bool   emitEvents = true; // output
 
-	// Get the length of the event queues
-	int numUnprocessedEventsQueued();
-	int numProcessedEventsQueued();
-
 	const std::string incomingQueue;
 	const std::string outgoingQueue;
 
