@@ -16,8 +16,10 @@ Subscriber::~Subscriber()
 {
 }
 
-void Subscriber::getNextEvent()
+Event *Subscriber::getNextEvent()
 {
-    std::string consumer_tag = m_channel->BasicConsume("test", "");
-    AmqpClient::Envelope::ptr_t envelope = m_channel->BasicConsumeMessage(consumer_tag);
+    //std::string consumer_tag = m_channel->BasicConsume("test", "");
+    //AmqpClient::Envelope::ptr_t envelope = m_channel->BasicConsumeMessage(consumer_tag);
+
+	return nullptr;
 }

@@ -3,7 +3,7 @@
 #include <iostream>
 #include <ctime>
 #include "stdlib.h"
-#include "SimpleAmqpClient.h"
+#include "SimpleAmqpClient/SimpleAmqpClient.h"
 #include "Event.h"
 #include "EventHandler.h"
 #include "Module.h"

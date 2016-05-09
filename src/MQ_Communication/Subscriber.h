@@ -1,5 +1,6 @@
 #pragma once
-#include "SimpleAmqpClient.h"
+#include "SimpleAmqpClient/SimpleAmqpClient.h"
+#include "Event.h"
 
 class Subscriber
 {
@@ -10,7 +11,7 @@ public:
 
     ~Subscriber();
 
-    void getNextEvent();
+    Event *getNextEvent();
     void startConsumingEvents();
     void stopConsumingEvents();
 

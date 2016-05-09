@@ -1,9 +1,12 @@
 #include "EventHandler.h"
+#include <iostream>
+#include <thread>
 
 EventHandler::EventHandler()
 {
     // No events ignored by default
-    for (int i = 0; i < Event::eventType::NUM_TYPES; i++) {
+    for (int i = 0; i < Event::eventType::NUM_TYPES; i++)
+	{
         ignoredEvents[i] = false;
     }
 
@@ -12,21 +15,20 @@ EventHandler::EventHandler()
 
 EventHandler::~EventHandler()
 {
+	for (int i = 0; i < EVENT_QUEUE_SIZE; i++) {
+		delete eventQueue[i];
+	}
 }
 
-void EventHandler::run(std::string host)
+void EventHandler::run(std::string inputHost, std::string outputHost)
 {
-    if (running) { return; }
+    std::thread acceptorThread(&EventHandler::acceptor, this);
+    std::thread  emitterThread(&EventHandler::emitter, this);
 
-    /*int t1, t2;
-    boost::thread acceptorThread;
-    boost:: emitterThread;
+	acceptorThread.join();
+	emitterThread.join();
 
-    t1 = pthread_create(&acceptorThread, NULL, acceptor, (void *)&host);
-    t2 = pthread_create(&emitterThread, NULL, emitter, (void *)&host);
-    if (t1 || t2) {
-        printf("Thread creation failed\n");
-    }*/
+	std::cout << "endrun\n";
 }
 
 int EventHandler::numUnprocessedEventsQueued()
@@ -39,22 +41,51 @@ int EventHandler::numProcessedEventsQueued()
     return 0;
 }
 
-int EventHandler::numEventsQueued()
+void EventHandler::acceptor()
 {
-    if (start_index > end_index) {
-        return MAX_QUEUED_EVENTS + end_index - start_index;
-    }
-    else {
-        return end_index - start_index;
-    }
+	Event *evtPtr;
+
+	while (acceptorEnabled)
+	{
+		if (numEventsQueued < EVENT_QUEUE_SIZE - 2)
+		{
+			//If eventQueue has room, try to get an Event from the MQ
+			// getNextEvent allocates space for an Event, but emitter deallocates it
+			if ((evtPtr = sub->getNextEvent()) != nullptr)
+			{
+				// If there's an Event, grab it and queue it
+
+				// TODO: Discard malformed/irrelevant events
+				// TODO: Try-Catch to avoid incrementing end_index in case of enqueue failure
+				eventQueue[end_index] = evtPtr;
+
+				if ((++end_index) == EVENT_QUEUE_SIZE) {
+					end_index = 0;
+				}
+				else if (end_index > EVENT_QUEUE_SIZE) {
+					// TODO: If end_index > EVENT_QUEUE_SIZE, terminate program with error
+				}
+
+				numEventsQueued++;
+			}
+		}
+	}
 }
 
-void* EventHandler::acceptor(void* host)
+void EventHandler::emitter()
 {
-    return nullptr;
-}
+	while (emitterEnabled)
+	{
+		if (numEventsQueued > 0)
+		{
+			// If there's an Event in the queue, spit it out
+			// TODO: Try-Catch stuff
+			pub->publishEvent(eventQueue[start_index]);
 
-void* EventHandler::emitter(void* host)
-{
-    return nullptr;
+			// If successful, do all this
+			delete eventQueue[start_index];
+			start_index++;
+			numEventsQueued--;
+		}
+	}
 }
