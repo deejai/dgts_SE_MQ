@@ -9,7 +9,7 @@ public:
     ~Event();
 
     // eventType::NUM_TYPES gives the number of different Event types
-    enum eventType { COLLISION, MUNITION, PHYSICS, NUM_TYPES };
+    enum eventType { COLLISION, MUNITION, PHYSICS, INSTRUCTION, NUM_TYPES };
 
     // Disabled Events will be passed along without processing by EventHandler objects
     bool isEnabled();
