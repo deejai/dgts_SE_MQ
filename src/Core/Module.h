@@ -8,9 +8,16 @@ public:
     Module();
     ~Module();
 
-    EventHandler* evtHandler;
 
-    std::string decodeEvent(Event *evt);
-    Event *encodeEvent(std::string evtString);
+	void pauseEventHandler();
+	void startEventHandler();
+
+	// takes an Event of type inputEvent and outputs one of type outputEvent
+    virtual Event *processEvent(Event *evt) = 0;
+
+private:
+	EventHandler* evtHandler;
+	Event::eventType inputEvent;
+	Event::eventType outputEvent;
 };
 
