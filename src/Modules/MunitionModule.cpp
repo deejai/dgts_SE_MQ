@@ -1,36 +1,13 @@
 #include "MunitionModule.h"
-
-
+#include "Event.h"
 
 munitionModule::munitionModule()
 {
+	 inputEvent = Event::MUNITION;
+	outputEvent = Event::PHYSICS;
 }
 
 
 munitionModule::~munitionModule()
-{
-}
-
-void munitionModule::connectAmqpInput()
-{
-}
-
-void munitionModule::disconnectAmqpInput()
-{
-}
-
-void munitionModule::connectAmqpOutput()
-{
-}
-
-void munitionModule::disconnectAmqpOutput()
-{
-}
-
-void munitionModule::start()
-{
-}
-
-void munitionModule::stop()
 {
 }

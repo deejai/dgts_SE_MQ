@@ -1,34 +1,13 @@
 #include "ApiModule.h"
+#include "Event.h"
 
 
 ApiModule::ApiModule()
 {
+	  inputEvent = Event::COLLISION;
+	 outputEvent = Event::MUNITION;
 }
 
 ApiModule::~ApiModule()
-{
-}
-
-void ApiModule::connectMunitionStream()
-{
-}
-
-void ApiModule::disconnectMunitionStream()
-{
-}
-
-void ApiModule::connectAmqpOutput()
-{
-}
-
-void ApiModule::disconnectAmqpOutput()
-{
-}
-
-void ApiModule::start()
-{
-}
-
-void ApiModule::stop()
 {
 }

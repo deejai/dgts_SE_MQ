@@ -1,33 +1,12 @@
 #include "PhysicsModule.h"
+#include "Event.h"
 
 physicsModule::physicsModule()
 {
+	 inputEvent = Event::PHYSICS;
+	outputEvent = Event::INSTRUCTION;
 }
 
 physicsModule::~physicsModule()
-{
-}
-
-void physicsModule::connectAmqpInput()
-{
-}
-
-void physicsModule::disconnectAmqpInput()
-{
-}
-
-void physicsModule::connectEnvironmentOutput()
-{
-}
-
-void physicsModule::disconnectEnvironmentOutput()
-{
-}
-
-void physicsModule::start()
-{
-}
-
-void physicsModule::stop()
 {
 }

@@ -6,4 +6,4 @@ class ApiModule : public Module
 public:
 	ApiModule();
 	~ApiModule();
-}
+};
