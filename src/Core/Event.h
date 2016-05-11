@@ -20,6 +20,7 @@ public:
 
     bool isInteractiveWith(Event::eventType type);
 
+	eventType getEventID();
 	std::string getDescription();
 
 private:

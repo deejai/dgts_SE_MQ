@@ -1,5 +1,7 @@
 #include "ApiModule.h"
 #include "Event.h"
+#include "CollisionEvent.h"
+#include "MunitionEvent.h"
 
 
 ApiModule::ApiModule()
@@ -12,8 +14,16 @@ ApiModule::~ApiModule()
 {
 }
 
-CollisionEvent *ApiModule::processEvent(MunitionEvent *evt)
+Event *ApiModule::processEvent(Event *evt)
 {
-	delete evt;
-	return new CollisionEvent();
+	if (evt->getEventID() == inputEvent) {
+		delete evt;
+		return new CollisionEvent();
+	}
+	else {
+		// Wrong Event type
+		delete evt;
+		// TODO: Call Module error function
+		return nullptr;
+	}
 }

@@ -34,6 +34,11 @@ bool Event::isInteractiveWith(eventType type)
     return this->interactions[type];
 }
 
+Event::eventType Event::getEventID()
+{
+	return eventID;
+}
+
 std::string Event::getDescription()
 {
 	return std::string();

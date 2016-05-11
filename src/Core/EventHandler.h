@@ -10,8 +10,8 @@ class EventHandler
 {
 public:
 	EventHandler();
-	EventHandler(std::string inEventKey, std::string outEventKey);
-	EventHandler(std::string inHost, std::string outHost, std::string inEventKey, std::string outEventKey);
+	EventHandler(Event::eventType inEventKey, Event::eventType outEventKey);
+	EventHandler(std::string inHost, std::string outHost, Event::eventType inEventKey, Event::eventType outEventKey);
 	~EventHandler();
 
 	void run();
@@ -24,7 +24,7 @@ public:
 	std::string outgoingQueue;
 	
 private:
-	void Initialize(std::string inputHost, std::string outputHost, std::string inEventKey, std::string outEventKey);
+	void Initialize(std::string inputHost, std::string outputHost, Event::eventType inEventKey, Event::eventType outEventKey);
 
 	// if false, acceptor/emitter will do nothing and return
 	bool acceptorEnabled = true;

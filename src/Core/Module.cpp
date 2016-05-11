@@ -10,7 +10,7 @@ Module::~Module()
 
 void Module::Initialize(std::string inHost, std::string outHost)
 {
-	evtHandler = new EventHandler(inHost, outHost, "", "");
+	evtHandler = new EventHandler(inHost, outHost, inputEvent, outputEvent);
 }
 
 void Module::pauseEventHandler()
