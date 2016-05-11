@@ -20,6 +20,8 @@ public:
 
     bool isInteractiveWith(Event::eventType type);
 
+	std::string getDescription();
+
 private:
     bool enabled = true;
     time_t timestamp = time(NULL);
@@ -27,4 +29,5 @@ private:
 protected:
     Event::eventType eventID;
     bool interactions[Event::eventType::NUM_TYPES];
+	std::string description;
 };

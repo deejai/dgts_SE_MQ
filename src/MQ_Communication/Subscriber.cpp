@@ -2,14 +2,12 @@
 
 Subscriber::Subscriber()
 {
-    m_channel = AmqpClient::Channel::Create("localhost");
-    std::string queue = m_channel->DeclareQueue("test", false, false, false, true);
+	Initialize("localhost", "", Event::NUM_TYPES);
 }
 
-Subscriber::Subscriber(std::string host)
+Subscriber::Subscriber(std::string host, std::string queue, Event::eventType evtType)
 {
-    m_channel = AmqpClient::Channel::Create(host);
-    std::string queue = m_channel->DeclareQueue("test", false, false, false, true);
+	Initialize(host, queue, evtType);
 }
 
 Subscriber::~Subscriber()
@@ -24,11 +22,12 @@ Event *Subscriber::getNextEvent()
 	return nullptr;
 }
 
-void Subscriber::Initialize(std::string host)
+void Subscriber::Initialize(std::string host, std::string queue, Event::eventType evtType)
 {
 	m_channel = AmqpClient::Channel::Create(host);
 
-	queueName = m_channel->DeclareQueue("");
+	queueName = m_channel->DeclareQueue(queue);
+	routingKey = "eventType_" + evtType;
 
 	m_channel->BindQueue(queueName, exchangeName, routingKey);
 }

@@ -10,18 +10,22 @@ class EventHandler
 {
 public:
 	EventHandler();
+	EventHandler(std::string inEventKey, std::string outEventKey);
+	EventHandler(std::string inHost, std::string outHost, std::string inEventKey, std::string outEventKey);
 	~EventHandler();
 
-	void run(std::string inputHost, std::string outputHost);
+	void run();
 
 	// Communication with RabbitMQ or Module halts while false
 	bool acceptEvents = true; // input
 	bool   emitEvents = true; // output
 
-	const std::string incomingQueue;
-	const std::string outgoingQueue;
-
+	std::string incomingQueue;
+	std::string outgoingQueue;
+	
 private:
+	void Initialize(std::string inputHost, std::string outputHost, std::string inEventKey, std::string outEventKey);
+
 	// if false, acceptor/emitter will do nothing and return
 	bool acceptorEnabled = true;
 	bool  emitterEnabled = true;

@@ -1,12 +1,10 @@
 #pragma once
 #include "SE_MQ_Client.h"
-#include "SimpleAmqpClient/SimpleAmqpClient.h"
-#include "publisher.h"
+#include "ApiModule.h"
 
 int main()
 {
-    Publisher* pub = new Publisher();
-	delete pub;
+	ApiModule *apiMod = new ApiModule();
 	std::cout << "END_MAIN"; std::cin.ignore();
 	
     // TODO: Display menu if no command line argument was received

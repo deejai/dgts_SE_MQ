@@ -11,3 +11,9 @@ ApiModule::ApiModule()
 ApiModule::~ApiModule()
 {
 }
+
+CollisionEvent *ApiModule::processEvent(MunitionEvent *evt)
+{
+	delete evt;
+	return new CollisionEvent();
+}

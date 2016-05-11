@@ -7,18 +7,19 @@ class Publisher
 public:
     // Defaults to localhost if no host is provided
     Publisher();
-	Publisher(std::string host);
-	Publisher(std::string host, std::string eventKey);
+	Publisher(std::string host, std::string queue, Event::eventType evtType);
     ~Publisher();
 
     // Publish a single Event
     void publishEvent(Event* evt);
 
+protected:
+	void Initialize(std::string host, std::string queue, Event::eventType evtType);
+
 private:
     AmqpClient::Channel::ptr_t m_channel;
 
-    void Initialize(std::string host, std::string eventKey);
-	const std::string exchangeName = "amq.direct";
+	const std::string exchangeName = "amq.fanout";
 
 	// Declared in Initialize()
 	std::string queueName;

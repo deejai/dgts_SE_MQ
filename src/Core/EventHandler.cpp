@@ -4,11 +4,17 @@
 
 EventHandler::EventHandler()
 {
-    // No events ignored by default
-    for (int i = 0; i < Event::eventType::NUM_TYPES; i++)
-	{
-        ignoredEvents[i] = false;
-    }
+	Initialize("localhost", "localhost", "testEvent", "testEvent");
+}
+
+EventHandler::EventHandler(std::string inEventKey, std::string outEventKey)
+{
+	Initialize("localhost", "localhost", inEventKey, outEventKey);
+}
+
+EventHandler::EventHandler(std::string inHost, std::string outHost, std::string inEventKey, std::string outEventKey)
+{
+	Initialize(inHost, outHost, inEventKey, outEventKey);
 }
 
 EventHandler::~EventHandler()
@@ -16,9 +22,11 @@ EventHandler::~EventHandler()
 	for (int i = 0; i < EVENT_QUEUE_SIZE; i++) {
 		delete eventQueue[i];
 	}
+	delete pub;
+	delete sub;
 }
 
-void EventHandler::run(std::string inputHost, std::string outputHost)
+void EventHandler::run()
 {
     std::thread acceptorThread(&EventHandler::acceptor, this);
     std::thread  emitterThread(&EventHandler::emitter, this);
@@ -27,6 +35,18 @@ void EventHandler::run(std::string inputHost, std::string outputHost)
 	emitterThread.join();
 
 	std::cout << "endrun\n";
+}
+
+void EventHandler::Initialize(std::string inputHost, std::string outputHost, std::string inEventKey, std::string outEventKey)
+{
+	// No events ignored by default
+	for (int i = 0; i < Event::eventType::NUM_TYPES; i++)
+	{
+		ignoredEvents[i] = false;
+	}
+
+	sub = new Subscriber(inputHost,  inEventKey,  incomingQueue);
+	pub = new Publisher(outputHost, outEventKey, outgoingQueue);
 }
 
 void EventHandler::acceptor()

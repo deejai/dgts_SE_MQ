@@ -4,9 +4,13 @@ Module::Module()
 {
 }
 
-
 Module::~Module()
 {
+}
+
+void Module::Initialize(std::string inHost, std::string outHost)
+{
+	evtHandler = new EventHandler(inHost, outHost, "", "");
 }
 
 void Module::pauseEventHandler()
