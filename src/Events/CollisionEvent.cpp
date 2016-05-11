@@ -2,6 +2,7 @@
 
 CollisionEvent::CollisionEvent()
 {
+	eventID = Event::eventType::COLLISION;
 }
 
 

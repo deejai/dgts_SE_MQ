@@ -2,6 +2,7 @@
 
 MunitionEvent::MunitionEvent()
 {
+	eventID = Event::eventType::MUNITION;
 }
 
 

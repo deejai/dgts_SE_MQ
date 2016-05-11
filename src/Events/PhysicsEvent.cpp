@@ -2,6 +2,7 @@
 
 PhysicsEvent::PhysicsEvent()
 {
+	eventID = Event::eventType::PHYSICS;
 }
 
 PhysicsEvent::~PhysicsEvent()
