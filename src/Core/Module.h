@@ -8,7 +8,6 @@ public:
     Module();
     ~Module();
 
-
 	void pauseEventHandler();
 	void startEventHandler();
 
