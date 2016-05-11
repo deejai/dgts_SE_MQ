@@ -23,3 +23,12 @@ Event *Subscriber::getNextEvent()
 
 	return nullptr;
 }
+
+void Subscriber::Initialize(std::string host)
+{
+	m_channel = AmqpClient::Channel::Create(host);
+
+	queueName = m_channel->DeclareQueue("");
+
+	m_channel->BindQueue(queueName, exchangeName, routingKey);
+}
