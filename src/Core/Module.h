@@ -2,6 +2,8 @@
 #include "Event.h"
 #include "EventHandler.h"
 
+#define NETWORK_QUEUE_TYPES 3
+
 class Module
 {
 public:
@@ -19,11 +21,15 @@ protected:
 	Event::eventType  inputEvent;
 	Event::eventType outputEvent;
 
-	void Initialize(std::string inHost, std::string outHost);
+	void Initialize(std::string inHost,  std::string outHost,
+					std::string inQueue, std::string outQueue);
 
-	const std::string queueA = "INPUT_to_ApiModule";
-	const std::string queueB = "ApiModule_to_munitionModule";
-	const std::string queueC = "munitionModule_to_OUTPUT";
-
+private:
+	static std::string networkQueues[] =
+	{
+		"INPUT_to_ApiModule",
+		"ApiModule_to_munitionModule",
+		"munitionModule_to_OUTPUT"
+	};
 };
 

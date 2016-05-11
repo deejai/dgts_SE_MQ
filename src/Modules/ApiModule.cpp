@@ -10,8 +10,6 @@ ApiModule::ApiModule()
 	 outputEvent = Event::MUNITION;
 
 	 Initialize("localhost", "localhost");
-	 evtHandler->incomingQueue = Module::queueA;
-	 evtHandler->outgoingQueue = Module::queueB;
 }
 
 ApiModule::~ApiModule()

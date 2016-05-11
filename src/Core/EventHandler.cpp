@@ -44,8 +44,9 @@ void EventHandler::Initialize(std::string inputHost, std::string outputHost, Eve
 	{
 		ignoredEvents[i] = false;
 	}
-
+	std::cout << "sub params: " << inputHost << ", " << incomingQueue << ", " << inEventKey << "\n";
 	sub = new Subscriber(inputHost,  incomingQueue, inEventKey);
+	std::cout << "pub params: " << outputHost << ", " << outgoingQueue << ", " << outEventKey << "\n";
 	pub = new Publisher(outputHost, outgoingQueue, outEventKey);
 }
 
