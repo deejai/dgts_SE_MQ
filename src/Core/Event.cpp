@@ -8,17 +8,6 @@ Event::~Event()
 {
 }
 
-bool Event::isEnabled()
-{
-    return this->enabled;
-}
-
-bool Event::setEnabledState(bool state)
-{
-    this->enabled = state;
-    return (this->enabled == state);
-}
-
 time_t Event::getTimeStamp()
 {
     return timestamp;
@@ -31,7 +20,7 @@ time_t Event::updateTimeStamp()
 
 bool Event::isInteractiveWith(eventType type)
 {
-    return this->interactions[type];
+    return interactions[type];
 }
 
 Event::eventType Event::getEventID()

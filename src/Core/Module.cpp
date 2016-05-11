@@ -13,14 +13,7 @@ void Module::Initialize(std::string inHost, std::string outHost)
 	evtHandler = new EventHandler(inHost, outHost, inputEvent, outputEvent);
 }
 
-void Module::pauseEventHandler()
+void Module::run()
 {
-	evtHandler->acceptEvents = false;
-	evtHandler->emitEvents = false;
-}
-
-void Module::startEventHandler()
-{
-	evtHandler->acceptEvents = true;
-	evtHandler->emitEvents = true;
+	evtHandler->run();
 }

@@ -5,6 +5,8 @@
 int main()
 {
 	ApiModule *apiMod = new ApiModule();
+	apiMod->run();
+
 	std::cout << "END_MAIN"; std::cin.ignore();
 	
     // TODO: Display menu if no command line argument was received

@@ -8,8 +8,7 @@ public:
 	Module();
     ~Module();
 
-	void pauseEventHandler();
-	void startEventHandler();
+	void run();
 
 	// takes an Event of type inputEvent and outputs one of type outputEvent
     virtual Event *processEvent(Event *evt) = 0;

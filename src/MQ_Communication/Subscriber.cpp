@@ -2,7 +2,7 @@
 
 Subscriber::Subscriber()
 {
-	Initialize("localhost", "", Event::NUM_TYPES);
+	Initialize("localhost", "testQueue", Event::NUM_TYPES);
 }
 
 Subscriber::Subscriber(std::string host, std::string queue, Event::eventType evtType)

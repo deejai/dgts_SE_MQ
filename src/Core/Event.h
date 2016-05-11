@@ -11,10 +11,6 @@ public:
     // eventType::NUM_TYPES gives the number of different Event types
     enum eventType { COLLISION, MUNITION, PHYSICS, INSTRUCTION, NUM_TYPES };
 
-    // Disabled Events will be passed along without processing by EventHandler objects
-    bool isEnabled();
-    bool setEnabledState(bool state); // Returns true is state changed
-
     time_t getTimeStamp();
     time_t updateTimeStamp(); // Returns modified timestamp
 
@@ -24,7 +20,6 @@ public:
 	std::string getDescription();
 
 private:
-    bool enabled = true;
     time_t timestamp = time(NULL);
 
 protected:
