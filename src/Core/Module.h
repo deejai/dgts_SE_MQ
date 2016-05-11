@@ -14,9 +14,9 @@ public:
 	// takes an Event of type inputEvent and outputs one of type outputEvent
     virtual Event *processEvent(Event *evt) = 0;
 
-private:
+protected:
 	EventHandler* evtHandler;
-	Event::eventType inputEvent;
+	Event::eventType  inputEvent;
 	Event::eventType outputEvent;
 };
 
