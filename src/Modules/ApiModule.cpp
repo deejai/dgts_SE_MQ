@@ -28,7 +28,7 @@ Event *ApiModule::processEvent(Event *evt)
 {
 	if (evt->getEventID() == inputEvent) {
 		delete evt;
-		return new CollisionEvent();
+		return new MunitionEvent();
 	}
 	else {
 		// Wrong Event type

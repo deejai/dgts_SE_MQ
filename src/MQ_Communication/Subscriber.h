@@ -17,9 +17,9 @@ private:
     AmqpClient::Channel::ptr_t m_channel;
 
 	void Initialize(std::string host, Event::eventType evtType, std::string queue);
-	const std::string exchangeName = "amq.direct";
 
 	// Generated in Initialize()
 	std::string queueName;
-	std::string routingKey;
+	std::string exchangeName;
+	std::string consumer_tag;
 };

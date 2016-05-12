@@ -16,9 +16,9 @@ Subscriber::~Subscriber()
 
 Event *Subscriber::getNextEvent()
 {
-    //std::string consumer_tag = m_channel->BasicConsume("test", "");
-    //AmqpClient::Envelope::ptr_t envelope = m_channel->BasicConsumeMessage(consumer_tag);
-
+    AmqpClient::Envelope::ptr_t envelope = m_channel->BasicConsumeMessage(consumer_tag);
+	std::cout << envelope->Message()->Body();
+	m_channel->BasicAck(envelope->GetDeliveryInfo());
 	return nullptr;
 }
 
@@ -26,8 +26,11 @@ void Subscriber::Initialize(std::string host, Event::eventType evtType, std::str
 {
 	m_channel = AmqpClient::Channel::Create(host);
 
-	queueName = m_channel->DeclareQueue(queue, false, true, false, false);
-	routingKey = "eventType_";
+	exchangeName = "eventType_" + std::to_string(evtType);
+	m_channel->DeclareExchange(exchangeName, "fanout");
 
-	m_channel->BindQueue(queueName, exchangeName, routingKey);
+	queueName = m_channel->DeclareQueue(queue, false, true, false, false);
+	m_channel->BindQueue(queueName, exchangeName, "");
+
+	consumer_tag = m_channel->BasicConsume(queueName, "", true, false, true, 1);
 }

@@ -31,7 +31,7 @@ void Publisher::Initialize(std::string host, Event::eventType evtType, std::stri
 	m_channel = AmqpClient::Channel::Create(host);
 
 	queueName = m_channel->DeclareQueue(queue, false, true, false, false);
-	routingKey = "eventType_";
+	routingKey = "eventType_" + std::to_string(evtType);
 
 	m_channel->BindQueue(queueName, exchangeName, routingKey);
 }
