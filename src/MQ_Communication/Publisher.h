@@ -7,14 +7,14 @@ class Publisher
 public:
     // Defaults to localhost if no host is provided
     Publisher();
-	Publisher(std::string host, std::string queue, Event::eventType evtType);
+	Publisher(std::string host, Event::eventType evtType, std::string queue);
     ~Publisher();
 
     // Publish a single Event
     void publishEvent(Event* evt);
 
 protected:
-	void Initialize(std::string host, std::string queue, Event::eventType evtType);
+	void Initialize(std::string host, Event::eventType evtType, std::string queue);
 
 private:
     AmqpClient::Channel::ptr_t m_channel;

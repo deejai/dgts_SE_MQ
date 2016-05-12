@@ -24,8 +24,7 @@ protected:
 	void Initialize(std::string inHost,  std::string outHost,
 					std::string inQueue, std::string outQueue);
 
-private:
-	static std::string networkQueues[] =
+	const std::string networkQueues[NETWORK_QUEUE_TYPES]
 	{
 		"INPUT_to_ApiModule",
 		"ApiModule_to_munitionModule",

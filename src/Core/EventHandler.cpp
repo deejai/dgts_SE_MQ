@@ -4,17 +4,17 @@
 
 EventHandler::EventHandler()
 {
-	Initialize("localhost", "localhost", Event::eventType::NUM_TYPES, Event::eventType::NUM_TYPES);
+	Initialize("localhost",                 "localhost",
+		       Event::eventType::NUM_TYPES, Event::eventType::NUM_TYPES,
+		       "testQueue",                 "testQueue"
+	);
 }
 
-EventHandler::EventHandler(Event::eventType inEventKey, Event::eventType outEventKey)
+EventHandler::EventHandler(     std::string inHost,          std::string outHost,
+	                       Event::eventType inEventKey, Event::eventType outEventKey,
+	                            std::string inQueue,         std::string outQueue)
 {
-	Initialize("localhost", "localhost", inEventKey, outEventKey);
-}
-
-EventHandler::EventHandler(std::string inHost, std::string outHost, Event::eventType inEventKey, Event::eventType outEventKey)
-{
-	Initialize(inHost, outHost, inEventKey, outEventKey);
+	Initialize(inHost, outHost, inEventKey, outEventKey, inQueue, outQueue);
 }
 
 EventHandler::~EventHandler()
@@ -37,17 +37,19 @@ void EventHandler::run()
 	std::cout << "endrun\n";
 }
 
-void EventHandler::Initialize(std::string inputHost, std::string outputHost, Event::eventType inEventKey, Event::eventType outEventKey)
+void EventHandler::Initialize(     std::string inHost,          std::string outHost,
+							  Event::eventType inEventKey, Event::eventType outEventKey,
+								   std::string inQueue,         std::string outQueue)
 {
 	// No events ignored by default
 	for (int i = 0; i < Event::eventType::NUM_TYPES; i++)
 	{
 		ignoredEvents[i] = false;
 	}
-	std::cout << "sub params: " << inputHost << ", " << incomingQueue << ", " << inEventKey << "\n";
-	sub = new Subscriber(inputHost,  incomingQueue, inEventKey);
-	std::cout << "pub params: " << outputHost << ", " << outgoingQueue << ", " << outEventKey << "\n";
-	pub = new Publisher(outputHost, outgoingQueue, outEventKey);
+	std::cout << "sub params: " << inHost << ", " << inQueue << ", " << inEventKey << "\n";
+	sub = new Subscriber(inHost, inEventKey, inQueue);
+	std::cout << "pub params: " << outHost << ", " << outQueue << ", " << outEventKey << "\n";
+	pub = new Publisher(outHost, outEventKey, outQueue);
 }
 
 void EventHandler::acceptor()

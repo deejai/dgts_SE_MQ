@@ -12,7 +12,7 @@ Module::~Module()
 
 void Module::Initialize(std::string inHost, std::string outHost, std::string inQueue, std::string outQueue)
 {
-	evtHandler = new EventHandler(inHost, outHost, inputEvent, outputEvent);
+	evtHandler = new EventHandler(inHost, outHost, inputEvent, outputEvent, inQueue, outQueue);
 }
 
 void Module::run()

@@ -9,7 +9,15 @@ ApiModule::ApiModule()
 	  inputEvent = Event::COLLISION;
 	 outputEvent = Event::MUNITION;
 
-	 Initialize("localhost", "localhost");
+	 Initialize("localhost", "localhost", Module::networkQueues[0], Module::networkQueues[1]);
+}
+
+ApiModule::ApiModule(std::string inHost, std::string outHost)
+{
+	inputEvent = Event::COLLISION;
+	outputEvent = Event::MUNITION;
+
+	Initialize(inHost, outHost, Module::networkQueues[0], Module::networkQueues[1]);
 }
 
 ApiModule::~ApiModule()

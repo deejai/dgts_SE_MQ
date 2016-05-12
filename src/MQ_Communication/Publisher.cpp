@@ -3,12 +3,12 @@
 
 Publisher::Publisher()
 {
-    Initialize("localhost", "testQueue", Event::NUM_TYPES);
+    Initialize("localhost", Event::NUM_TYPES, "testQueue");
 }
 
-Publisher::Publisher(std::string host, std::string queue, Event::eventType evtType)
+Publisher::Publisher(std::string host, Event::eventType evtType, std::string queue)
 {
-	Initialize(host, queue, evtType);
+	Initialize(host, evtType, queue);
 }
 
 Publisher::~Publisher()
@@ -26,11 +26,11 @@ void Publisher::publishEvent(Event *evt)
 	m_channel->BasicPublish(exchangeName, routingKey, message);
 }
 
-void Publisher::Initialize(std::string host, std::string queue, Event::eventType evtType)
+void Publisher::Initialize(std::string host, Event::eventType evtType, std::string queue)
 {
 	m_channel = AmqpClient::Channel::Create(host);
 
-	queueName = m_channel->DeclareQueue(queue/*, false, true, false, false*/);
+	queueName = m_channel->DeclareQueue(queue, false, true, false, false);
 	routingKey = "eventType_";
 
 	m_channel->BindQueue(queueName, exchangeName, routingKey);

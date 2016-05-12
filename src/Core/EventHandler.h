@@ -10,8 +10,9 @@ class EventHandler
 {
 public:
 	EventHandler();
-	EventHandler(Event::eventType inEventKey, Event::eventType outEventKey);
-	EventHandler(std::string inHost, std::string outHost, Event::eventType inEventKey, Event::eventType outEventKey);
+	EventHandler(     std::string inHost,          std::string outHost,
+				 Event::eventType inEventKey, Event::eventType outEventKey,
+				      std::string inQueue,         std::string outQueue);
 	~EventHandler();
 
 	void run();
@@ -21,7 +22,9 @@ public:
 	bool   emitEvents = false; // output
 	
 private:
-	void Initialize(std::string inputHost, std::string outputHost, Event::eventType inEventKey, Event::eventType outEventKey);
+	void Initialize(     std::string inHost,          std::string outHost,
+		            Event::eventType inEventKey, Event::eventType outEventKey,
+		                 std::string inQueue,         std::string outQueue);
 
 	// if false, acceptor/emitter will do nothing and return
 	bool acceptorEnabled = true;
