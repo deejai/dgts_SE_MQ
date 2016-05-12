@@ -8,6 +8,7 @@ set(HEADERS
     Events/CollisionEvent.h
     Events/MunitionEvent.h
     Events/PhysicsEvent.h
+    Events/InstructionEvent.h
     Modules/ApiModule.h
     Modules/MunitionModule.h
     Modules/PhysicsModule.h
@@ -23,6 +24,7 @@ set(SOURCES
     Events/CollisionEvent.cpp
     Events/MunitionEvent.cpp
     Events/PhysicsEvent.cpp
+    Events/InstructionEvent.cpp
     Modules/ApiModule.cpp
     Modules/MunitionModule.cpp
     Modules/PhysicsModule.cpp    
