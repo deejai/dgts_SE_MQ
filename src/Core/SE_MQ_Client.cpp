@@ -6,9 +6,6 @@
 
 int main()
 {
-	ApiModule *apiMod = new ApiModule();
-	apiMod->run();
-	
 	int choice = 0;
 	
 	while (choice < 1 || choice > 3)
@@ -25,6 +22,9 @@ int main()
 
 	// Module
 	Module *mod;
+
+	std::cout << "\n" << choice << "\n";
+	std::cin.ignore();
 
     // TODO: Initialize chosen module
 	switch (choice)

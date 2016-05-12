@@ -6,7 +6,8 @@ EventHandler::EventHandler()
 {
 	Initialize("localhost",                 "localhost",
 		       Event::eventType::NUM_TYPES, Event::eventType::NUM_TYPES,
-		       "testQueue",                 "testQueue"
+		       "testQueue",                 "testQueue",
+			   
 	);
 }
 
@@ -54,7 +55,7 @@ void EventHandler::Initialize(     std::string inHost,          std::string outH
 
 void EventHandler::acceptor()
 {
-	Event *evtPtr;
+	std::string evtString;
 
 	while (acceptorEnabled)
 	{
@@ -65,13 +66,13 @@ void EventHandler::acceptor()
 		{
 			//If eventQueue has room, try to get an Event from the MQ
 			// getNextEvent allocates space for an Event, but emitter deallocates it
-			if ((evtPtr = sub->getNextEvent()) != nullptr)
+			if ((evtString = sub->getNextEventString()).compare("_ERROR_") != 0)
 			{
 				// If there's an Event, grab it and queue it
 
 				// TODO: Discard malformed/irrelevant events
 				// TODO: Try-Catch to avoid incrementing end_index in case of enqueue failure
-				eventQueue[end_index] = evtPtr;
+				eventQueue[end_index] = ;
 
 				if ((++end_index) == EVENT_QUEUE_SIZE) {
 					end_index = 0;
@@ -81,6 +82,10 @@ void EventHandler::acceptor()
 				}
 
 				numEventsQueued++;
+			}
+			else
+			{
+				std::cout << "\n_ERROR_\n";
 			}
 		}
 	}

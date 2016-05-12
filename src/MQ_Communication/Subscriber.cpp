@@ -14,12 +14,13 @@ Subscriber::~Subscriber()
 {
 }
 
-Event *Subscriber::getNextEvent()
+std::string Subscriber::getNextEventString()
 {
     AmqpClient::Envelope::ptr_t envelope = m_channel->BasicConsumeMessage(consumer_tag);
-	std::cout << envelope->Message()->Body();
+	std::string evtString = envelope->Message()->Body();
 	m_channel->BasicAck(envelope->GetDeliveryInfo());
-	return nullptr;
+
+	return evtString;
 }
 
 void Subscriber::Initialize(std::string host, Event::eventType evtType, std::string queue)

@@ -2,7 +2,7 @@
 #include "Event.h"
 #include "EventHandler.h"
 
-#define NETWORK_QUEUE_TYPES 3
+#define NETWORK_QUEUE_TYPES 4
 
 class Module
 {
@@ -27,8 +27,9 @@ protected:
 	const std::string networkQueues[NETWORK_QUEUE_TYPES]
 	{
 		"INPUT_to_ApiModule",
-		"ApiModule_to_munitionModule",
-		"munitionModule_to_OUTPUT"
+		"ApiModule_to_MunitionModule",
+		"MunitionModule_to_PhysicsModule",
+		"PhysicsModule_to_OUTPUT"
 	};
 };
 

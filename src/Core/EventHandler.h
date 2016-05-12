@@ -15,6 +15,7 @@ public:
 				      std::string inQueue,         std::string outQueue);
 	~EventHandler();
 
+	// evtProcessor takes in a string and returns an Event pointer
 	void run();
 
 	// Communication with RabbitMQ or Module halts while false

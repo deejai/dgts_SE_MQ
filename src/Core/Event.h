@@ -19,6 +19,10 @@ public:
 	eventType getEventID();
 	std::string getDescription();
 
+	virtual Event *stringToEvent(std::string evtString) = 0;
+
+	Event *
+
 private:
     time_t timestamp = time(NULL);
 
