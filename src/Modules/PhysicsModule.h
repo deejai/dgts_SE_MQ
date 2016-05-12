@@ -1,9 +1,12 @@
 #pragma once
 #include "Module.h"
 
-class physicsModule : public Module
+class PhysicsModule : public Module
 {
 public:
-    physicsModule();
-    ~physicsModule();
+    PhysicsModule();
+	PhysicsModule(std::string inHost, std::string outHost);
+    ~PhysicsModule();
+
+	Event *processEvent(Event *evt);
 };

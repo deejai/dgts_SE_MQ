@@ -1,10 +1,13 @@
 #pragma once
 #include "Module.h"
 
-class munitionModule : public Module
+class MunitionModule : public Module
 {
 public:
-    munitionModule();
-    ~munitionModule();
+    MunitionModule();
+	MunitionModule(std::string inHost, std::string outHost);
+    ~MunitionModule();
+
+	Event *processEvent(Event *evt);
 };
 
