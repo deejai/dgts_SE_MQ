@@ -18,9 +18,13 @@ public:
 	void run();
 
 	// Communication with RabbitMQ or Module halts while false
-	bool acceptEvents = false; // input
-	bool   emitEvents = false; // output
-	
+	bool acceptEvents = true; // input
+	bool   emitEvents = true; // output
+
+protected:
+	std::string incomingQueue;
+	std::string outgoingQueue;
+
 private:
 	void Initialize(     std::string inHost,          std::string outHost,
 		            Event::eventType inEventKey, Event::eventType outEventKey,

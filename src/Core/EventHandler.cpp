@@ -58,6 +58,9 @@ void EventHandler::acceptor()
 
 	while (acceptorEnabled)
 	{
+		std::cout << "(acceptor) numEventsQueued: " << numEventsQueued << "\n";
+		std::cin.ignore();
+
 		if (numEventsQueued < EVENT_QUEUE_SIZE - 2)
 		{
 			//If eventQueue has room, try to get an Event from the MQ
@@ -87,6 +90,9 @@ void EventHandler::emitter()
 {
 	while (emitterEnabled)
 	{
+		std::cout << "(emitter) numEventsQueued: " << numEventsQueued << "\n";
+		std::cin.ignore();
+
 		if (numEventsQueued > 0)
 		{
 			// If there's an Event in the queue, spit it out
