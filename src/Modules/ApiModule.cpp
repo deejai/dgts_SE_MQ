@@ -3,7 +3,6 @@
 #include "CollisionEvent.h"
 #include "MunitionEvent.h"
 
-
 ApiModule::ApiModule()
 {
 	  inputEvent = Event::COLLISION;

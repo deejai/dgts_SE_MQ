@@ -1,4 +1,5 @@
 #include "EventHandler.h"
+#include "Module.h"
 #include <iostream>
 #include <thread>
 
@@ -6,9 +7,7 @@ EventHandler::EventHandler()
 {
 	Initialize("localhost",                 "localhost",
 		       Event::eventType::NUM_TYPES, Event::eventType::NUM_TYPES,
-		       "testQueue",                 "testQueue",
-			   
-	);
+		       "testQueue",                 "testQueue");
 }
 
 EventHandler::EventHandler(     std::string inHost,          std::string outHost,
@@ -27,9 +26,9 @@ EventHandler::~EventHandler()
 	delete sub;
 }
 
-void EventHandler::run()
+void EventHandler::run(Module *myModule)
 {
-    std::thread acceptorThread(&EventHandler::acceptor, this);
+    std::thread acceptorThread(&EventHandler::acceptor, this, myModule);
     std::thread  emitterThread(&EventHandler::emitter, this);
 
 	acceptorThread.join();
@@ -53,26 +52,26 @@ void EventHandler::Initialize(     std::string inHost,          std::string outH
 	pub = new Publisher(outHost, outEventKey, outQueue);
 }
 
-void EventHandler::acceptor()
+void EventHandler::acceptor(Module *myModule)
 {
-	std::string evtString;
+	Event *evt;
 
 	while (acceptorEnabled)
 	{
 		std::cout << "(acceptor) numEventsQueued: " << numEventsQueued << "\n";
-		std::cin.ignore();
+		//std::cin.ignore();
 
 		if (numEventsQueued < EVENT_QUEUE_SIZE - 2)
 		{
 			//If eventQueue has room, try to get an Event from the MQ
 			// getNextEvent allocates space for an Event, but emitter deallocates it
-			if ((evtString = sub->getNextEventString()).compare("_ERROR_") != 0)
+			if ( (evt = sub->getNextEvent()) != nullptr )
 			{
 				// If there's an Event, grab it and queue it
 
 				// TODO: Discard malformed/irrelevant events
 				// TODO: Try-Catch to avoid incrementing end_index in case of enqueue failure
-				eventQueue[end_index] = ;
+				eventQueue[end_index] = myModule->processEvent(evt);
 
 				if ((++end_index) == EVENT_QUEUE_SIZE) {
 					end_index = 0;
@@ -83,9 +82,8 @@ void EventHandler::acceptor()
 
 				numEventsQueued++;
 			}
-			else
-			{
-				std::cout << "\n_ERROR_\n";
+			else {
+				std::cout << "\nsub->getNextEvent() returned a nullptr\n";
 			}
 		}
 	}
@@ -95,8 +93,6 @@ void EventHandler::emitter()
 {
 	while (emitterEnabled)
 	{
-		std::cout << "(emitter) numEventsQueued: " << numEventsQueued << "\n";
-		std::cin.ignore();
 
 		if (numEventsQueued > 0)
 		{
@@ -108,6 +104,8 @@ void EventHandler::emitter()
 			delete eventQueue[start_index];
 			start_index++;
 			numEventsQueued--;
+
+			std::cout << "(emitter ) numEventsQueued: " << numEventsQueued << "\n";
 		}
 	}
 }

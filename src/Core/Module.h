@@ -16,7 +16,7 @@ public:
     virtual Event *processEvent(Event *evt) = 0;
 
 protected:
-	EventHandler* evtHandler;
+	EventHandler *evtHandler;
 
 	Event::eventType  inputEvent;
 	Event::eventType outputEvent;

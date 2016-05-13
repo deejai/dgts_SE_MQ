@@ -7,5 +7,5 @@ public:
     MunitionEvent();
     ~MunitionEvent();
 
-	static Event *stringToEvent(std::string evtString);
+	unsigned char *data[5];
 };

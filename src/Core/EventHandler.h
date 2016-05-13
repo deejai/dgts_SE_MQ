@@ -6,6 +6,8 @@
 
 #define EVENT_QUEUE_SIZE 1000
 
+class Module;
+
 class EventHandler
 {
 public:
@@ -15,8 +17,7 @@ public:
 				      std::string inQueue,         std::string outQueue);
 	~EventHandler();
 
-	// evtProcessor takes in a string and returns an Event pointer
-	void run();
+	void run(Module *myModule);
 
 	// Communication with RabbitMQ or Module halts while false
 	bool acceptEvents = true; // input
@@ -46,7 +47,7 @@ private:
 
 
 	// Handles the subscriber, writing to the queue, and incrementing the end_index
-	void acceptor();
+	void acceptor(Module *myModule);
 	Subscriber *sub;
 
 	// Handles the publisher and incrementing the start_index

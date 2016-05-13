@@ -1,5 +1,6 @@
 #pragma once
 #include "SimpleAmqpClient/SimpleAmqpClient.h"
+#include "Event.h"
 
 class Subscriber
 {
@@ -10,7 +11,7 @@ public:
     ~Subscriber();
 
     // Consume a single Event
-	std::string getNextEventString();
+	Event *getNextEvent();
 
 private:
     AmqpClient::Channel::ptr_t m_channel;
