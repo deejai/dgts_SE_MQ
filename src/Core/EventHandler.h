@@ -4,7 +4,7 @@
 #include "publisher.h"
 #include <atomic>
 
-#define EVENT_QUEUE_SIZE 1000
+#define EVENT_QUEUE_SIZE 10
 
 class Module;
 
@@ -22,6 +22,8 @@ public:
 	// Communication with RabbitMQ or Module halts while false
 	bool acceptEvents = true; // input
 	bool   emitEvents = true; // output
+
+	void EventHandler::visualizeQueue();
 
 protected:
 	std::string incomingQueue;

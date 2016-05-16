@@ -59,7 +59,7 @@ void EventHandler::acceptor(Module *myModule)
 	while (acceptorEnabled)
 	{
 		std::cout << "(acceptor) numEventsQueued: " << numEventsQueued << "\n";
-		//std::cin.ignore();
+		std::cin.ignore();
 
 		if (numEventsQueued < EVENT_QUEUE_SIZE - 2)
 		{
@@ -73,17 +73,22 @@ void EventHandler::acceptor(Module *myModule)
 				// TODO: Try-Catch to avoid incrementing end_index in case of enqueue failure
 				eventQueue[end_index] = myModule->processEvent(evt);
 
-				if ((++end_index) == EVENT_QUEUE_SIZE) {
+				end_index++;
+				numEventsQueued++;
+
+				if (end_index == EVENT_QUEUE_SIZE) {
 					end_index = 0;
 				}
 				else if (end_index > EVENT_QUEUE_SIZE) {
-					// TODO: If end_index > EVENT_QUEUE_SIZE, terminate program with error
+					// If end_index > EVENT_QUEUE_SIZE, terminate program with error
+					std::cout << "END_INDEX > EVENT_QUEUE_SIZE. EXITING.\n";
+					exit(-1);
 				}
 
-				numEventsQueued++;
 			}
 			else {
-				std::cout << "\nsub->getNextEvent() returned a nullptr\n";
+				std::cout << "\nsub->getNextEvent() returned a nullptr...\n";
+				std::cin.ignore();
 			}
 		}
 	}
@@ -98,14 +103,43 @@ void EventHandler::emitter()
 		{
 			// If there's an Event in the queue, spit it out
 			// TODO: Try-Catch stuff
-			pub->publishEvent(eventQueue[start_index]);
+			if (eventQueue[start_index] == nullptr) {
+				std::cout << "Empty event in start_index. Visualizing queue. Press Enter to continue\n";
+				visualizeQueue();
+				std::cin.ignore();
+			}
+			else {
+				pub->publishEvent(eventQueue[start_index]);
 
-			// If successful, do all this
-			delete eventQueue[start_index];
-			start_index++;
-			numEventsQueued--;
+				// If successful, do all this
+				delete eventQueue[start_index];
+				start_index++;
+				numEventsQueued--;
+			}
 
 			std::cout << "(emitter ) numEventsQueued: " << numEventsQueued << "\n";
 		}
 	}
+}
+
+void EventHandler::visualizeQueue()
+{
+	bool disjointed = start_index > end_index;
+
+	for (int i = 0; i < EVENT_QUEUE_SIZE; i++) {
+		if (i == start_index) {
+			std::cout << ((start_index == end_index) ? "X" : "S");
+		}
+		else if (i == end_index ){
+			std::cout << "e";
+		}
+		else if (disjointed){
+			std::cout << ((i<start_index || i>end_index) ? "E" : "-");
+		}
+		else {
+			std::cout << ((i<start_index || i>end_index) ? "-" : "E");
+		}
+	}
+
+	std::cout << "\n";
 }

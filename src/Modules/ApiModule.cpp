@@ -25,9 +25,15 @@ ApiModule::~ApiModule()
 
 Event *ApiModule::processEvent(Event *evt)
 {
-	if (evt->getEventID() == inputEvent) {
+	if (evt->getEventID("processEvent:apiMod") == inputEvent) {
 		delete evt;
-		return new MunitionEvent();
+
+		// Avoid race condition
+		Event::m_mutex.lock();
+		evt = new MunitionEvent();
+		Event::m_mutex.unlock();
+
+		return evt;
 	}
 	else {
 		// Wrong Event type

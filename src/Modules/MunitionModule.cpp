@@ -25,9 +25,15 @@ MunitionModule::~MunitionModule()
 
 Event *MunitionModule::processEvent(Event *evt)
 {
-	if (evt->getEventID() == inputEvent) {
+	if (evt->getEventID("processEvent:munitionMod") == inputEvent) {
 		delete evt;
-		return new PhysicsEvent();
+
+		// Avoid race condition
+		Event::m_mutex.lock();
+		evt = new PhysicsEvent();
+		Event::m_mutex.unlock();
+
+		return evt;
 	}
 	else {
 		// Wrong Event type

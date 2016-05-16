@@ -18,7 +18,7 @@ public:
 
     bool isInteractiveWith(Event::eventType type);
 
-	eventType getEventID();
+	eventType getEventID(std::string whoCalledMe); // arg for debugging only
 	std::string getDescription();
 
 	static Event *stringToEvent(std::string);

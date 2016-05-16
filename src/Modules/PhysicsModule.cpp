@@ -25,9 +25,15 @@ PhysicsModule::~PhysicsModule()
 
 Event *PhysicsModule::processEvent(Event *evt)
 {
-	if (evt->getEventID() == inputEvent) {
+	if (evt->getEventID("processEvent:physicsMod") == inputEvent) {
 		delete evt;
-		return new InstructionEvent();
+
+		// Avoid race condition
+		Event::m_mutex.lock();
+		evt = new InstructionEvent();
+		Event::m_mutex.unlock();
+
+		return evt;
 	}
 	else {
 		// Wrong Event type

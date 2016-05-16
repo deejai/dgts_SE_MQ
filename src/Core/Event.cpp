@@ -3,6 +3,7 @@
 #include "MunitionEvent.h"
 #include "PhysicsEvent.h"
 #include "InstructionEvent.h"
+#include <string>
 #include <ctype.h>
 
 std::mutex Event::m_mutex;
@@ -30,9 +31,14 @@ bool Event::isInteractiveWith(eventType type)
     return interactions[type];
 }
 
-Event::eventType Event::getEventID()
+Event::eventType Event::getEventID(std::string whoCalledMe)
 {
-	return eventID;
+	if (eventID) {
+		return eventID;
+	}
+	else {
+		std::cout << whoCalledMe << " called getEventID unsuccesfully.\n";
+	}
 }
 
 std::string Event::getDescription()

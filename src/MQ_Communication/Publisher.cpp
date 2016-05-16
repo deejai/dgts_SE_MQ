@@ -18,7 +18,7 @@ Publisher::~Publisher()
 void Publisher::publishEvent(Event *evt)
 {
 	//std::cout << "createMessage"; std::cin.ignore();
-	const std::string messageText = "eventType_" + std::to_string(evt->getEventID());
+	const std::string messageText = "eventType_" + std::to_string(evt->getEventID("publishEvent"));
 	AmqpClient::BasicMessage::ptr_t message = AmqpClient::BasicMessage::Create();
 	message->Body(messageText);
 
